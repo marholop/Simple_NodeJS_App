@@ -4,9 +4,8 @@ pipeline {
 		nodejs 'NodeJS'
 	}
 	environment {
-		SONARQUBE_URL = 'SonarQube'	
+		SONAR_PROJECT_KEY = 'node-app'
 		SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
-		SONAR_PROJECT_KEY = 'nodejs-app'
 	}
 
 	stages {
@@ -28,7 +27,7 @@ pipeline {
 		}
 		stage('SonarQube Analysis'){
 			steps {
-				withSonarQubeEnv([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+				withSonarQubeEnv([string(credentialsId: 'node-token', variable: 'SONAR_TOKEN')]) {
 					sh """
                     			${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                     			-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
@@ -36,9 +35,9 @@ pipeline {
                     			-Dsonar.host.url=http://192.168.1.128:9000 \
                     			-Dsonar.login=${SONAR_TOKEN}
                     			"""
-				}
+				}	
 			}
-		}	
+		}
 	}
 	post {
 		success {
