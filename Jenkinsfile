@@ -23,5 +23,13 @@ pipeline {
 		}
 	
 	}
+	post {
+		success {
+			echo 'Build completed succesfully!'
+		}
+		failure {
+			echo 'Build failed. Check logs.'
+		}
+	}
 
 }
