@@ -7,7 +7,6 @@ pipeline {
 		SONARQUBE_URL = 'SonarQube'	
 		SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
 		SONAR_PROJECT_KEY = 'nodejs-app'
-		SONAR_TOKEN = credentials('sonar-token')
 	}
 
 	stages {
@@ -29,7 +28,7 @@ pipeline {
 		}
 		stage('SonarQube Analysis'){
 			steps {
-				withSonarQubeEnv(credentialsId: 'sonar-token') {
+				withSonarQubeEnv([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
 					sh """
                     			${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                     			-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
