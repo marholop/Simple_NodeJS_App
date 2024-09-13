@@ -3,6 +3,9 @@ pipeline {
 	tools {
 		nodejs 'NodeJS'
 	}
+	environment {
+		SONARQUBE_SERVER = 'SonarQube'
+	}
 
 	stages {
 		stage('Checkout Github'){
@@ -21,7 +24,16 @@ pipeline {
 				sh 'npm test'
 			}
 		}
-	
+		stage('SonarQube Analysis'){
+			environment {
+				SCANNER_HOME = tool 'SonarQube'
+			}
+			steps {
+				withSonarQubeEnv(credentialsId: 'sonar-token') {
+    					sh '${SCANNER_HOME}/bin/sonar-scanner'
+				}
+			}
+		}	
 	}
 	post {
 		success {
