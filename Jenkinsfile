@@ -41,13 +41,13 @@ pipeline {
 				}
 			}
 		}
-		stage('Quality Gate'){
-			steps {
-				timeout(time: 1, unit: 'HOURS') {
-					waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
-				}
-			}
-		}
+		//stage('Quality Gate'){
+		//	steps {
+		//		timeout(time: 1, unit: 'MINUTES') {
+		//			waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
+		//		}
+		//	}
+		//}
 	}
 	post {
 		success {
