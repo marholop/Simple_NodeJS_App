@@ -45,7 +45,7 @@ pipeline {
 		}
 		stage('Quality Gate'){
 			steps {
-				timeout(activity: true, time: 1, unit: 'MINUTES') {
+				timeout(activity: true, time: 5, unit: 'MINUTES') {
 					waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
 				}
 			}
