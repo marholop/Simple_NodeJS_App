@@ -41,17 +41,10 @@ pipeline {
 				}
 			}
 		}
-		//stage('Quality Gate'){
-		//	steps {
-		//		timeout(time: 1, unit: 'HOURS') {
-		//			waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
-		//		}
-		//	}
-		//}
-		stage('Build Docker Image') {
+		stage('Quality Gate'){
 			steps {
-				script {
-					sh 'docker.build("$BUILD_NUMBER") '
+				timeout(time: 1, unit: 'HOURS') {
+					waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
 				}
 			}
 		}
@@ -64,5 +57,4 @@ pipeline {
 			echo 'Build failed. Check logs.'
 		}
 	}
-
 }
