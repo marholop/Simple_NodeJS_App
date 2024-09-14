@@ -41,6 +41,13 @@ pipeline {
 				}
 			}
 		}
+		stage('Quality Gate'){
+			steps {
+				timeout(activity: true, time: 1, unit: 'MINUTES') {
+					waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
+				}
+			}
+		}
 	}
 	post {
 		success {
