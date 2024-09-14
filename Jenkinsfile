@@ -6,6 +6,8 @@ pipeline {
 	environment {
 		SONAR_PROJECT_KEY = 'node-app'
 		SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
+		DOCKER_IMAGE = 'node-app'
+		DOCKER_TAG = 'latest'
 	}
 
 	stages {
@@ -45,6 +47,13 @@ pipeline {
 			steps {
 				timeout(activity: true, time: 1, unit: 'MINUTES') {
 					waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
+				}
+			}
+		}
+		stage('Build Docker Image') {
+			steps {
+				script {
+					docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
 				}
 			}
 		}
