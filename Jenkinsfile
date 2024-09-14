@@ -1,8 +1,8 @@
 pipeline {
 	agent any
-	//tools {
-	//	nodejs 'NodeJS'
-	//}
+	tools {
+		nodejs 'NodeJS'
+	}
 	//environment {
 	//	SONAR_PROJECT_KEY = 'node-app'
 	//	SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
@@ -15,16 +15,16 @@ pipeline {
 			}
 		}
 		
-		//stage('Install node dependencies'){
-		//	steps {
-		//		sh 'npm install'
-		//	}
-		//}
-		//stage('Tests'){
-		//	steps {
-		//		sh 'npm test'
-		//	}
-		//}
+		stage('Install node dependencies'){
+			steps {
+				sh 'npm install'
+			}
+		}
+		stage('Tests'){
+			steps {
+				sh 'npm test'
+			}
+		}
 		//stage('SonarQube Analysis'){
 		//	steps {
 		//		withCredentials([string(credentialsId: 'node-token', variable: 'SONAR_TOKEN')]) {
