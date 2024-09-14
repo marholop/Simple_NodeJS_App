@@ -48,6 +48,13 @@ pipeline {
 				}
 			}
 		}
+		stage('Build Docker Image') {
+			steps {
+				script {
+					sh 'docker.build("$BUILD_NUMBER") '
+				}
+			}
+		}
 	}
 	post {
 		success {
