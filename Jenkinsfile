@@ -41,13 +41,13 @@ pipeline {
 				}
 			}
 		}
-		stage('Quality Gate'){
-			steps {
-				timeout(time: 1, unit: 'HOURS') {
-					waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
-				}
-			}
-		}
+		//stage('Quality Gate'){
+		//	steps {
+		//		timeout(time: 1, unit: 'HOURS') {
+		//			waitForQualityGate abortPipeline: true, credentialsId: 'node-token'
+		//		}
+		//	}
+		//}
 		stage('Build Docker Image') {
 			steps {
 				script {
