@@ -41,13 +41,6 @@ pipeline {
 				}
 			}
 		}
-		stage('Build Docker Image'){
-			steps {
-				script {
-					docker.build("NodeImage" + ":$BUILD_NUMBER")
-				}
-			}
-		}
 	}
 	post {
 		success {
