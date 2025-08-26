@@ -34,7 +34,7 @@ pipeline {
                   		${SONAR_SCANNER_HOME}/bin/sonar-scanner \
                   		-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                     	-Dsonar.sources=. \
-                   		-Dsonar.host.url=localhost:9000 \
+                   		-Dsonar.host.url=https://da4ff1cf6208.ngrok-free.app \
                     	-Dsonar.login=${SONAR_TOKEN}
                     	"""
 					}	
