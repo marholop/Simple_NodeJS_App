@@ -43,12 +43,12 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    sh "kubectl set image deployment/myapp myapp=$DOCKER_IMAGE:$DOCKER_TAG -n default"
-                }
-            }
-        }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         script {
+        //             sh "kubectl set image deployment/myapp myapp=$DOCKER_IMAGE:$DOCKER_TAG -n default"
+        //         }
+        //     }
+        // }
     }
 }
