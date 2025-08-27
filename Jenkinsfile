@@ -3,12 +3,12 @@ pipeline {
 	tools {
 		nodejs 'NodeJS'
 	}
-	environment {
-		SONAR_PROJECT_KEY = 'node-app'
-		SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
-		DOCKER_HUB_CREDENTIALS_ID = 'jen-dockerhub'
-		DOCKER_HUB_REPO = 'marcel2630/jenkin-app'
-	}
+	// environment {
+	// 	SONAR_PROJECT_KEY = 'node-app'
+	// 	SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
+	// 	DOCKER_HUB_CREDENTIALS_ID = 'jen-dockerhub'
+	// 	DOCKER_HUB_REPO = 'marcel2630/jenkin-app'
+	// }
 
 	stages {
 		stage('Checkout Github'){
@@ -29,36 +29,34 @@ pipeline {
 		}
 		stage('Build Docker Image'){
 			steps {
-				script {
-					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
-				}
+				sh 'docker.build("nodeimage"+"$BUILD_NUMBER")'
 			}
 		}
-		stage('Push Image to DockerHub'){
-			steps {
-				script {
-					docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS_ID}"){
-						dockerImage.push('latest')
-					}
-				}
-			}
-		}
-		stage('SonarQube Analysis'){
-			steps {
-				withCredentials([string(credentialsId: 'node-token', variable: 'SONAR_TOKEN')]) {
+		// stage('Push Image to DockerHub'){
+		// 	steps {
+		// 		script {
+		// 			docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS_ID}"){
+		// 				dockerImage.push('latest')
+		// 			}
+		// 		}
+		// 	}
+		// }
+		// stage('SonarQube Analysis'){
+		// 	steps {
+		// 		withCredentials([string(credentialsId: 'node-token', variable: 'SONAR_TOKEN')]) {
 				   
-					withSonarQubeEnv('SonarQube') {
-						sh """
-                  		${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                  		-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                    	-Dsonar.sources=. \
-                   		-Dsonar.host.url=https://da4ff1cf6208.ngrok-free.app \
-                    	-Dsonar.login=${SONAR_TOKEN}
-                    	"""
-					}	
-				}
-			}
-		}
+		// 			withSonarQubeEnv('SonarQube') {
+		// 				sh """
+        //           		${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+        //           		-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+        //             	-Dsonar.sources=. \
+        //            		-Dsonar.host.url=https://da4ff1cf6208.ngrok-free.app \
+        //             	-Dsonar.login=${SONAR_TOKEN}
+        //             	"""
+		// 			}	
+		// 		}
+		// 	}
+		// }
 	}
 	post {
 		success {
