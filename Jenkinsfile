@@ -6,6 +6,8 @@ pipeline {
 	environment {
 		SONAR_PROJECT_KEY = 'node-app'
 		SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
+		DOCKER_HUB_CREDENTIALS_ID = 'jen-dockerhub'
+		DOCKER_HUB_REPO = 'marcel2630/jenkin-app'
 	}
 
 	stages {
@@ -23,6 +25,22 @@ pipeline {
 		stage('Tests'){
 			steps {
 				sh 'npm test'
+			}
+		}
+		stage('Build Docker Image'){
+			steps {
+				script {
+					dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
+				}
+			}
+		}
+		stage('Push Image to DockerHub'){
+			steps {
+				script {
+					docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIALS_ID}"){
+						dockerImage.push('latest')
+					}
+				}
 			}
 		}
 		stage('SonarQube Analysis'){
