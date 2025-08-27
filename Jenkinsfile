@@ -27,7 +27,8 @@ pipeline {
         stage('Scan with Trivy') {
             steps {
                 script {
-                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL $DOCKER_IMAGE:$DOCKER_TAG || true"
+                    // sh "trivy image --exit-code 1 --severity HIGH,CRITICAL $DOCKER_IMAGE:$DOCKER_TAG || true"
+					sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
                 }
             }
         }
