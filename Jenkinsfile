@@ -57,7 +57,7 @@ pipeline {
             steps {
                 // script {
                     // sh "trivy image $DOCKER_IMAGE:$DOCKER_TAG"
-					sh "trivy image $DOCKER_IMAGE:$DOCKER_TAG"
+					sh "trivy --no-progress image $DOCKER_IMAGE:$DOCKER_TAG"
                     // sh "trivy fs --security-checks vuln,config $DOCKER_IMAGE:$DOCKER_TAG"
 				// 	sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
                 // }
