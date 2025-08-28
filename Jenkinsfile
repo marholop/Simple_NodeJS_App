@@ -32,7 +32,7 @@ pipeline {
 
         stage('Trivy FileSystem Scan') {
             steps {
-                // sh "trivy fs ."
+                sh "trivy fs ."
             }
         }
 
