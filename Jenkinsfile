@@ -23,11 +23,19 @@ pipeline {
 				sh 'npm install'
 			}
 		}
+
 		stage('Tests'){
 			steps {
 				sh 'npm test'
 			}
 		}
+
+        stage('Trivy FileSystem Scan') {
+            steps {
+                sh "trivy fs --format table -o trivy-fs-report.html ."
+            }
+        }
+
 		stage('SonarQube Analysis'){
 			steps {
 				withCredentials([string(credentialsId: 'node-token', variable: 'SONAR_TOKEN')]) {
