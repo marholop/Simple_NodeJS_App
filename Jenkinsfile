@@ -18,13 +18,6 @@ pipeline {
             }
         }
 
-        stage('Install Trivy'){
-            steps {
-                sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin v0.65.0'
-                sh 'curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl > html.tpl'
-            }
-        }
-
         stage('Install node dependencies'){
 			steps {
 				sh 'npm install'
@@ -40,7 +33,6 @@ pipeline {
         stage('Trivy FileSystem Scan') {
             steps {
                 // sh "trivy fs ."
-                sh 'trivy filesystem --ignore-unfixed --vuln-type os,library --format template --template "@html.tpl" ./nodejs'
             }
         }
 
