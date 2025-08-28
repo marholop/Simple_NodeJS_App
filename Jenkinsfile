@@ -28,7 +28,7 @@ pipeline {
             steps {
                 // script {
                     // sh "trivy image $DOCKER_IMAGE:$DOCKER_TAG"
-					sh "trivy --skip-dirs image $DOCKER_IMAGE:$DOCKER_TAG"
+					sh "trivy --skip-dirs node_modules image $DOCKER_IMAGE:$DOCKER_TAG"
 				// 	sh 'trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest'
                 // }
 				// sh 'trivy image --severity HIGH,CRITICAL --no-progress --format table -o trivy-scan-report.txt $DOCKER_IMAGE:$DOCKER_TAG'
