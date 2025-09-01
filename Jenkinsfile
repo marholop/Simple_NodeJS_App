@@ -18,6 +18,12 @@ pipeline {
             }
         }
 
+        stage('Trivy FileSystem Scan') {
+            steps {
+                sh "trivy fs ."
+            }
+        }
+
         stage('Install node dependencies'){
 			steps {
 				sh 'npm install'
@@ -29,12 +35,6 @@ pipeline {
 				sh 'npm test'
 			}
 		}
-
-        stage('Trivy FileSystem Scan') {
-            steps {
-                sh "trivy fs ."
-            }
-        }
 
 		stage('SonarQube Analysis'){
 			steps {
